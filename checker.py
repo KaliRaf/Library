@@ -38,7 +38,7 @@ class CheckerInputs:
             self.check_genre(genre=genre)
 
     def check_published(self, published):
-        if re.fullmatch(r"^[1,2]{1}\d{3}-[0,1]{1}\d{1}-[1,2,3]{1}\d{1}$", published):
+        if re.fullmatch(r"^[12]{1}\d{3}-[01]{1}\d{1}-[123]{1}\d{1}$", published):
             return published
         else:
             print("Zły wzór dla formatu data")
