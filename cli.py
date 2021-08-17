@@ -42,14 +42,19 @@ class CLI:
         choice = input("Jeśli chcesz usunąć książkę wpisz jej tytuł lub id: ")
         if choice.isdigit() and self.libr.find_book(choice) is None:
             id_str = check_it.check_id(choice)
-            print(f"Usunięto książkę z nr id {id_str}")
             id = int(id_str)
-            self.libr.remove_book(id=id)
+            if self.libr.find_book(id=id):
+                self.libr.remove_book(id=id)
+                print(f"Usunięto książkę z nr id {id_str}")
+            else:
+                print("Nie można usunąć książki,\nponieważ nie istnieje.")
         else:
-            title_ = check_it.check_title(choice)
-            title = check_it.check_title(title_)
-            print(f"Usunięto książkę o tytule {title}")
-            self.libr.remove_book(title=title)
+            title = check_it.check_title(choice)
+            if self.libr.find_book(title=title):
+                self.libr.remove_book(title=title)
+                print(f"Usunięto książkę o tytule {title}")
+            else:
+                print("Nie można usunąć książki,\nponieważ nie istnieje.")
 
     def _data_for_book(self):
         check_it = CheckerInputs()
@@ -70,11 +75,16 @@ class CLI:
 
     def _data_for_find(self):
         check_it = CheckerInputs()
-        find = input("Podaj tytuł książki: ")
-        find = check_it.check_title(find)
-        finded = self.libr.find_book(find)
+        find = input("Podaj tytuł lub id książki: ")
+        if find.isdigit():
+            find1 = check_it.check_id(find)
+            finded = self.libr.find_book(id=find1)
+        else:
+            find1 = check_it.check_title(find)
+            finded = self.libr.find_book(title=find1)
+
         if finded is None:
-            print("Nie znaleziono książki o takim tytule.")
+            print("Nie znaleziono takiej książki!")
         else:
             print(finded)
             print(finded.get_more_information())
