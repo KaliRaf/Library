@@ -25,10 +25,12 @@ class Library:
         else:
             print("Nie ma jeszcze żadanej książki w bibliotece!")
 
-    def find_book(self, title: str):
+    def find_book(self, title: str = None, id: int = None):
         book_instance = None
         for book in self.books:
-            if book.title == title:
+            title_condition = (book.title == title)
+            id_condition = (book.id == id)
+            if (title_condition or id_condition) and not (title_condition and id_condition):
                 book_instance = book
                 break
         return book_instance
