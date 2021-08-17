@@ -19,8 +19,11 @@ class Library:
         self.books.append(new_book)
 
     def print_all_books(self):
-        for book in self.books:
-            print(book)
+        if len(self.books) > 0:
+            for book in self.books:
+                print(book)
+        else:
+            print("Nie ma jeszcze żadanej książki w bibliotece!")
 
     def find_book(self, title: str):
         book_instance = None
